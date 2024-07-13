@@ -1,0 +1,18 @@
+services:
+  redis:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: test-redis
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - ./data:/data
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
